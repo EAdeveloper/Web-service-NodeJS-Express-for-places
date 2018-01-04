@@ -7,6 +7,9 @@ app.get('/',(req, res)=>{
 	res.send("Hello World");
 });
 
+app.use(express.static('public'));
+
+
 app.listen(3000,function(){
 	console.log("I am ready to get petitions")
 })
