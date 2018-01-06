@@ -97,6 +97,16 @@ app.put('/places/:id',(req, res)=>{
       })
 })
 
+app.delete('/places/:id',(req, res)=>{
+  Place.findByIdAndRemove(req.params.id)
+    .then(doc=>{
+      res.json({});
+    }).catch(err=>{
+      console.log(err);
+      res.json(err);
+    })
+})
+
 
 
 
