@@ -53,7 +53,21 @@ app.get('/places',(req, res)=>{
       console.log(err);
       res.json(err);
     })
+});
+
+// Show only one place. Wildcards :id
+app.get('/places/:id',(req,res)=>{
+  // res.json(req.params.id);
+  // Place.findOne({})
+  Place.findById(req.params.id)
+    .then(doc=>{
+      res.json(doc);
+    }).catch(err=>{
+      console.log(err);
+      res.json(err);
+    })
 })
+
 
 
 
