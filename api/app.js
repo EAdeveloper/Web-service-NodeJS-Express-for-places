@@ -27,16 +27,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/places',(req, res)=>{
     
     Place.create({
-    // title:             req.body.title,
-    // description:       req.body.description,
-    // acceptsCreditCard: req.body.acceptsCreditCard,
-    // openHour:          req.body.openHour,
-    // closeHour:         req.body.closeHour
-    title: "Menteware Office",
-    description: "Best software company",
-    acceptsCreditCard: true,
-    openHour: 0,
-    closeHour: 24
+    title:             req.body.title,
+    description:       req.body.description,
+    acceptsCreditCard: req.body.acceptsCreditCard,
+    openHour:          req.body.openHour,
+    closeHour:         req.body.closeHour
+    // title: "Menteware Office",
+    // description: "Best software company",
+    // acceptsCreditCard: true,
+    // openHour: 0,
+    // closeHour: 24
   }).then(doc=>{
       res.json(doc)
     }).catch(err=>{
