@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // CRUD
 app.post('/places',(req, res)=>{
-    
     Place.create({
     title:             req.body.title,
     description:       req.body.description,
@@ -43,6 +42,17 @@ app.post('/places',(req, res)=>{
       console.log(err);
       res.json(err);
     });
+})
+
+app.get('/places',(req, res)=>{
+  // Show all places
+  Place.find({})
+    .then(docs=>{
+      res.json(docs);
+    }).catch(err=>{
+      console.log(err);
+      res.json(err);
+    })
 })
 
 
