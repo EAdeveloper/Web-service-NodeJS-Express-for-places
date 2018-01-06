@@ -68,6 +68,35 @@ app.get('/places/:id',(req,res)=>{
     })
 })
 
+// Update
+app.put('/places/:id',(req, res)=>{
+    // Place.findById(req.params.id)
+    //   .then(doc=>{
+    //     doc.title =              req.body.title;
+    //     doc.description =        req.body.description;
+    //     doc.acceptsCreditCard =  req.body.acceptsCreditCard;
+    //     doc.openHour =           req.body.openHour;
+    //     doc.closeHour =          req.body.closeHour;
+    //     doc.save();
+    //   })
+    let attributes = ['title','description', 'acceptsCreditCard',
+                    'openHour', 'closeHour'];
+    let placeParams = {}
+    attributes.forEach(attr=>{
+      if(Object.prototype.hasOwnProperty.call(req.body, attr))
+        placeParams[attr] = req.body[attr];
+    });             
+    // Place.update({'_id': req.params.id},placeParams).then(doc=>{
+    // Place.findOneAndUpdate({'_id': req.params.id},placeParams,{new: true})
+    Place.findByIdAndUpdate(req.params.id, placeParams,{new: true})
+      .then(doc=>{
+        res.json(doc);
+      }).catch(err=>{
+        console.log(err);
+        res.json(err);
+      })
+})
+
 
 
 
