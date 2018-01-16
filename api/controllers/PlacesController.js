@@ -2,7 +2,9 @@ const Place = require('../models/Place');
 
 function index(req, res){
 	  // Show all places
-	Place.find({}).then(doc=>{
+	// Place.find({}).then(doc=>{
+	Place.paginate({},{ page: req.query.page || 1, limit: 1, sort: {'_id': -1}  })
+		.then(doc=>{
     	res.json(doc);
       }).catch(err=>{
         console.log(err);
