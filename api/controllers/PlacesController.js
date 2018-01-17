@@ -1,5 +1,18 @@
 const Place = require('../models/Place');
 
+// Middleware
+// When pass 'next' we tell express to execute the funtion in the middleware
+function find(req, res, next){
+	Place.findById(req.params.id)
+	.then(place=>{
+		req.place = place;
+		next();
+	}).catch(err=>{
+		next(err);
+	})
+}
+
+
 function index(req, res){
 	  // Show all places
 	// Place.find({}).then(doc=>{
@@ -34,17 +47,10 @@ function create(req, res){
 
 }
 
-// Show only one place. Wildcards :id
 function show(req, res){
-	// res.json(req.params.id);
-  // Place.findOne({})
-    Place.findById(req.params.id).then(doc=>{
-      res.json(doc);
-    }).catch(err=>{
-      console.log(err);
-      res.json(err);
-    });
-	
+	// Individual search
+	// res.place is where we save the search result in the MiddleWare
+	res.json(req.place);
 }
 
 
@@ -61,14 +67,17 @@ function update(req, res){
     let attributes = ['title','description', 'acceptsCreditCard',
                     'openHour', 'closeHour'];
     let placeParams = {}
+    
     attributes.forEach(attr=>{
       if(Object.prototype.hasOwnProperty.call(req.body, attr))
         placeParams[attr] = req.body[attr];
     });             
-    // Place.update({'_id': req.params.id},placeParams).then(doc=>{
-    // Place.findOneAndUpdate({'_id': req.params.id},placeParams,{new: true})
-    Place.findByIdAndUpdate(req.params.id, placeParams,{new: true})
-      .then(doc=>{
+   
+    // req.place = Object.assign(req.place, req.body); THIS is not a secure way because can change the fields like permision to Admin for example
+
+    req.place = Object.assign(req.place, placeParams);
+
+    req.place.save().then(doc=>{
         res.json(doc);
       }).catch(err=>{
         console.log(err);
@@ -78,7 +87,7 @@ function update(req, res){
 }
 
 function destroy(req, res){
-	Place.findByIdAndRemove(req.params.id).then(doc=>{
+	req.place.remove().then(doc=>{
       res.json({});
     }).catch(err=>{
       console.log(err);
@@ -96,4 +105,4 @@ function destroy(req, res){
 // }
 
 // Same code above uisng the shortkey properties from ecmascript 6
-module.exports = {index, show, create, destroy, update};
+module.exports = {index, show, create, destroy, update, find};

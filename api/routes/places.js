@@ -10,9 +10,10 @@ router.route('/')
 
 // Show only one place. Wildcards :id
 router.route('/:id')
-  .get(placesController.show)
-  .put(placesController.update)
-  .delete(placesController.destroy)
-  
+  .get(placesController.find, placesController.show)
+  .put(placesController.find, placesController.update)
+  .delete(placesController.find, placesController.destroy)
+  // placesController.find is the middleware created in the controllers
+
 
   module.exports= router;
