@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 const places = require('./routes/places');
 
 const db = require('./config/database');
+
 db.connect();
 var app = express();
 

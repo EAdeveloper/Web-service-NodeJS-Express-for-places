@@ -1,5 +1,8 @@
 const Place = require('../models/Place');
 
+const upload = require('../config/upload');
+
+
 // Middleware
 // When pass 'next' we tell express to execute the funtion in the middleware
 function find(req, res, next){
@@ -96,6 +99,19 @@ function destroy(req, res){
 	
 }
 
+
+function multerMiddleware(){
+	// fields is an controler for archives in the web
+	//fields is method to create a collectin of names for the files we are expected to get
+	//In case it only gets ONE files you can use 'single' instead 'fields'
+	return upload.fields([
+		{name: 'avatar', maxCount: 1}, 
+		{name: 'cover', maxCount: 1}
+	]);
+}
+
+
+
 // module.exports = {
 // 	index: index,
 // 	create: create,
@@ -105,4 +121,4 @@ function destroy(req, res){
 // }
 
 // Same code above uisng the shortkey properties from ecmascript 6
-module.exports = {index, show, create, destroy, update, find};
+module.exports = {index, show, create, destroy, update, find, multerMiddleware};

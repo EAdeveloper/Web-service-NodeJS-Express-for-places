@@ -6,7 +6,7 @@ let router = express.Router();
 
 router.route('/')
   .get(placesController.index)
-  .post(placesController.create)
+  .post(placesController.multerMiddleware(), placesController.create)
 
 // Show only one place. Wildcards :id
 router.route('/:id')
