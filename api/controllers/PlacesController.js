@@ -117,27 +117,26 @@ function multerMiddleware(){
 
 function saveImageToCloud(req, res){
 	if(req.place){
-		// 'files' comes from multer and the 'avatar' comes from our function multerMiddleware
-		if(req.files && req.files.avatar){
-			const path = req.files.avatar[0].path;
-			// uploader(path).then(result=>{
-			// 	console.log(result);
-			// 	res.json(req.place);
-			// }).catch(err=>{
-			// 	console.log(err);
-			// 	res.json(err);
-			// })
+		// Siclo para las imgs
+		const archivos = ['avatar', 'cover'];
+		const promesas = [];
+		
+		archivos.forEach(imageType=>{
 
-			// the method 'updateAvatar' comes from the model, its responsability is 
-			// to upload the img to cloudinary and updates where it is in the Database
-			req.place.updateAvatar(path).then(result=>{
-				console.log(result);
-				res.json(result);
-			}).catch(err=>{
-				console.log(err);
-				res.json(err);
-			})
-		}
+			if(req.files && req.files[imageType]){
+				const path = req.files[imageType][0].path;
+				promesas.push(req.place.updateImage(path, imageType));
+			}	
+		})
+
+		Promise.all(promesas).then(results=>{
+			console.log(results);
+			res.json(req.place);
+		}).catch(err=>{
+			console.log(err);
+			res.json(err);
+		});	
+
 	}else{
 		res.status(422).json({
 			error: req.error || "Could not save place"

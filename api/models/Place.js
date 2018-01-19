@@ -24,15 +24,16 @@ let placeSchema = new mongoose.Schema({
 
 });
 
-placeSchema.methods.updateAvatar = function(path){
+placeSchema.methods.updateImage = function(path, imgType){
 	// Here we have to do 2 things, 
 	// First is to upload the image and second is to save the 'place'
 	return uploader(path)
-		.then(secure_url => this.saveAvatarUrl(secure_url))
+		.then(secure_url => this.saveImageUrl(secure_url, imgType))
 }
 
-placeSchema.methods.saveAvatarUrl = function(secureUrl){
-	this.avatarImage = secureUrl;
+placeSchema.methods.saveImageUrl = function(secureUrl, imgType){
+	// this.avatarImage = secureUrl;
+	this[imgType+ 'Image'] = secureUrl;
 	return this.save();
 }
 
