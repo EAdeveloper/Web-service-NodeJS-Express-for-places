@@ -6,7 +6,11 @@ let router = express.Router();
 
 router.route('/')
   .get(placesController.index)
-  .post(placesController.multerMiddleware(), placesController.create)
+  .post(
+    placesController.multerMiddleware(), 
+    placesController.create,
+    placesController.saveImageToCloud
+    )
 
 // Show only one place. Wildcards :id
 router.route('/:id')

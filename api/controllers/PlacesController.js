@@ -1,6 +1,7 @@
 const Place = require('../models/Place');
 
 const upload = require('../config/upload');
+const uploader = require('../models/uploader');
 
 
 // Middleware
@@ -29,7 +30,9 @@ function index(req, res){
 
 }
 
-function create(req, res){
+function create(req, res, next){
+	// create new places
+	console.log(req.body);
 	Place.create({
     title:             req.body.title,
     description:       req.body.description,
@@ -42,10 +45,13 @@ function create(req, res){
     // openHour: 0,
     // closeHour: 24
   }).then(doc=>{
-      res.json(doc)
+      // res.json(doc)
+      req.place = doc;
+      next();
     }).catch(err=>{
-      console.log(err);
-      res.json(err);
+      // console.log(err);
+      // res.json(err);
+      next(err);
     });
 
 }
@@ -110,6 +116,35 @@ function multerMiddleware(){
 	]);
 }
 
+function saveImageToCloud(req, res){
+	if(req.place){
+		// 'files' comes from multer and the 'avatar' comes from our function multerMiddleware
+		if(req.files && req.files.avatar){
+			const path = req.files.avatar[0].path;
+			uploader(path).then(result=>{
+				console.log(result);
+				res.json(req.place);
+			}).catch(err=>{
+				console.log(err);
+				res.json(err);
+			})
+		}
+	}else{
+		res.status(422).json({
+			error: req.error || "Could not save place"
+		});
+	}
+}
+
+module.exports = {
+	index, show, create, destroy, update, find, multerMiddleware, 
+	saveImageToCloud
+};
+
+
+
+
+
 
 
 // module.exports = {
@@ -121,4 +156,4 @@ function multerMiddleware(){
 // }
 
 // Same code above uisng the shortkey properties from ecmascript 6
-module.exports = {index, show, create, destroy, update, find, multerMiddleware};
+
