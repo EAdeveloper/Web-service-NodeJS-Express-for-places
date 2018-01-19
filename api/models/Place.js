@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const uploader = require('./uploader');
-
+const slugify = require('../plugins/slugify');
 
 
 
@@ -12,7 +12,12 @@ let placeSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	slug:{
+		type: String,
+		unique: true
+	},
 	description: String,
+	address: String,
 	acceptsCreditCard: {
 		type: Boolean,
 		default: false
@@ -36,6 +41,15 @@ placeSchema.methods.saveImageUrl = function(secureUrl, imgType){
 	this[imgType+ 'Image'] = secureUrl;
 	return this.save();
 }
+
+// Generate SEO URLS using Slug
+// http://mongoosejs.com/docs/middleware.html
+// 'pre' is a hooks the Mongoose
+// Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions.
+placeSchema.pre('save', function(next){
+	this.slug = slugify(this.title);
+	next();
+})
 
 
 placeSchema.plugin(mongoosePaginate);
