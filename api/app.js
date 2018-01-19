@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 
 const places = require('./routes/places');
+const users = require('./routes/users');
 
 const db = require('./config/database');
 
@@ -22,7 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // from the router places
 app.use('/places', places);
-
+// routes for users
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

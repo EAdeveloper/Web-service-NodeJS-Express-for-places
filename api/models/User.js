@@ -21,6 +21,6 @@ let userSchema = new mongoose.Schema({
 // verify password, encrypt password etc.
 userSchema.plugin(mongooseBcrypt);
 
-const User = mongoose('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
