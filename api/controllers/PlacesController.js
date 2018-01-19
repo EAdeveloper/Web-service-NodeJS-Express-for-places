@@ -6,7 +6,7 @@ const upload = require('../config/upload');
 // Middleware
 // When pass 'next' we tell express to execute the funtion in the middleware
 function find(req, res, next){
-	Place.findById(req.params.id)
+	Place.findOne({slug:req.params.id})
 	.then(place=>{
 		req.place = place;
 		next();
@@ -19,7 +19,7 @@ function find(req, res, next){
 function index(req, res){
 	  // Show all places
 	// Place.find({}).then(doc=>{
-	Place.paginate({},{ page: req.query.page || 1, limit: 1, sort: {'_id': -1}  })
+	Place.paginate({},{ page: req.query.page || 1, limit: 4, sort: {'_id': -1}  })
 		.then(doc=>{
     	res.json(doc);
       }).catch(err=>{
