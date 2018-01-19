@@ -2,6 +2,8 @@ const Place = require('../models/Place');
 
 const upload = require('../config/upload');
 
+const helpers = require('./helpers');
+
 
 // Middleware
 // When pass 'next' we tell express to execute the funtion in the middleware
@@ -29,21 +31,13 @@ function index(req, res){
 
 }
 
+const validParams = ['title','description', 'address', 'acceptsCreditCard',
+                    'openHour', 'closeHour'];
 function create(req, res, next){
 	// create new places
 	console.log(req.body);
-	Place.create({
-    title:             req.body.title,
-    description:       req.body.description,
-    acceptsCreditCard: req.body.acceptsCreditCard,
-    openHour:          req.body.openHour,
-    closeHour:         req.body.closeHour
-    // title: "Menteware Office",
-    // description: "Best software company",
-    // acceptsCreditCard: true,
-    // openHour: 0,
-    // closeHour: 24
-  }).then(doc=>{
+	const params = helpers.buildParams(validParams ,req.body)
+	Place.create(params).then(doc=>{
       // res.json(doc)
       req.place = doc;
       next();
@@ -61,29 +55,11 @@ function show(req, res){
 	res.json(req.place);
 }
 
-
 function update(req, res){
-	// Place.findById(req.params.id)
-    //   .then(doc=>{
-    //     doc.title =              req.body.title;
-    //     doc.description =        req.body.description;
-    //     doc.acceptsCreditCard =  req.body.acceptsCreditCard;
-    //     doc.openHour =           req.body.openHour;
-    //     doc.closeHour =          req.body.closeHour;
-    //     doc.save();
-    //   })
-    let attributes = ['title','description', 'acceptsCreditCard',
-                    'openHour', 'closeHour'];
-    let placeParams = {}
-    
-    attributes.forEach(attr=>{
-      if(Object.prototype.hasOwnProperty.call(req.body, attr))
-        placeParams[attr] = req.body[attr];
-    });             
-   
     // req.place = Object.assign(req.place, req.body); THIS is not a secure way because can change the fields like permision to Admin for example
 
-    req.place = Object.assign(req.place, placeParams);
+    const params = helpers.buildParams(validParams ,req.body)
+    req.place = Object.assign(req.place, params);
 
     req.place.save().then(doc=>{
         res.json(doc);
