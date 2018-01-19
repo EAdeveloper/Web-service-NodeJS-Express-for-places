@@ -1,7 +1,6 @@
 const Place = require('../models/Place');
 
 const upload = require('../config/upload');
-const uploader = require('../models/uploader');
 
 
 // Middleware
@@ -121,9 +120,19 @@ function saveImageToCloud(req, res){
 		// 'files' comes from multer and the 'avatar' comes from our function multerMiddleware
 		if(req.files && req.files.avatar){
 			const path = req.files.avatar[0].path;
-			uploader(path).then(result=>{
+			// uploader(path).then(result=>{
+			// 	console.log(result);
+			// 	res.json(req.place);
+			// }).catch(err=>{
+			// 	console.log(err);
+			// 	res.json(err);
+			// })
+
+			// the method 'updateAvatar' comes from the model, its responsability is 
+			// to upload the img to cloudinary and updates where it is in the Database
+			req.place.updateAvatar(path).then(result=>{
 				console.log(result);
-				res.json(req.place);
+				res.json(result);
 			}).catch(err=>{
 				console.log(err);
 				res.json(err);

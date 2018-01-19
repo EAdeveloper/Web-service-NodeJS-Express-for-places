@@ -1,6 +1,10 @@
 
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
+const uploader = require('./uploader');
+
+
+
 
 // Schema del modelo
 let placeSchema = new mongoose.Schema({
@@ -19,6 +23,18 @@ let placeSchema = new mongoose.Schema({
 	closeHour: Number
 
 });
+
+placeSchema.methods.updateAvatar = function(path){
+	// Here we have to do 2 things, 
+	// First is to upload the image and second is to save the 'place'
+	return uploader(path)
+		.then(secure_url => this.saveAvatarUrl(secure_url))
+}
+
+placeSchema.methods.saveAvatarUrl = function(secureUrl){
+	this.avatarImage = secureUrl;
+	return this.save();
+}
 
 
 placeSchema.plugin(mongoosePaginate);
