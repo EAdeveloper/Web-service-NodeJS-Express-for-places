@@ -47,7 +47,7 @@ placeSchema.methods.saveImageUrl = function(secureUrl, imgType){
 // 'pre' is a hooks the Mongoose
 // Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions.
 placeSchema.pre('save', function(next){
-	
+	if(this.slug) return next();
 	generateSlugSiguienteDiferent.call(this, 0, next);
 })
 
