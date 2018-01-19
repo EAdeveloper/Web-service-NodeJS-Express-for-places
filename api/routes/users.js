@@ -9,7 +9,11 @@ router.route('/')
 		usersController.create, 
 		sessionsController.generateToken,
 		sessionsController.sendToken
-		);
+		)
+
+	// WARNING
+	// When do get, this route will destroy all users
+	// .get(usersController.destroyAll);
 
 
 

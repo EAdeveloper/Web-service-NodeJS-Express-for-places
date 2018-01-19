@@ -31,6 +31,13 @@ function create(req,res,next){
 }
 
 
+// WARNING
+// This is the most dangerous funtion for the route
+// function destroyAll(req, res){
+// 	User.remove({}).then(r => res.json({}));
+// }
+// module.exports = { create, destroyAll }
 
 
-module.exports = { create }
+
+module.exports = { create}
