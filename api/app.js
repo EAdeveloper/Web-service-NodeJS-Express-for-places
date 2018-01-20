@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+// This middleware validates the jsonwebtoken
+const jwtMiddleware = require('express-jwt');
+const secrets = require('./config/secrets');
 
 
 const places = require('./routes/places');
@@ -22,6 +25,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Using the express-jwt all routes request are protected with a json web token
+// Unless you specified which ones do not  need to be protected
+app.use(
+	jwtMiddleware({secret: secrets.jwtSecret})
+//to loging and create user are excluded from the protection so you can request without needing a json web token.
+		.unless({path: ['/sessions', 'users'] })
+	)
 
 // from the router places
 app.use('/places', places);
