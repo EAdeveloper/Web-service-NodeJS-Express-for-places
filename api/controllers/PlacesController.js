@@ -37,6 +37,8 @@ function create(req, res, next){
 	// create new places
 	console.log(req.body);
 	const params = helpers.buildParams(validParams ,req.body)
+	console.log(req.user);
+	params['_user'] = req.user.id; //the object req.user is fill by the middleware of Json web tokens, check it out in the SessionsController
 	Place.create(params).then(doc=>{
       // res.json(doc)
       req.place = doc;
