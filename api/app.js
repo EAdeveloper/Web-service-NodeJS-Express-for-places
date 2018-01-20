@@ -31,8 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Unless you specified which ones do not  need to be protected
 app.use(
 	jwtMiddleware({secret: secrets.jwtSecret})
-//to loging and create user are excluded from the protection so you can request without needing a json web token.
-		.unless({path: ['/sessions', 'users'] })
+	//to loging and create user are excluded from the protection so you can request without needing a json web token.
+		// .unless({path: ['/sessions', 'users'] })
+	// This line excludes the protection to the "GET" request
+		.unless({path: ['/sessions', 'users'], method: 'GET' })
+
 	)
 
 // from the router places
