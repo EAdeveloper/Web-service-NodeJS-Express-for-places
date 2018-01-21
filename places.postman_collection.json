@@ -1,0 +1,257 @@
+{
+	"variables": [],
+	"info": {
+		"name": "places",
+		"_postman_id": "d11ebc69-e8f4-37c9-f749-595a2ec17ff9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/places/seo-urls-con-slug-3",
+			"request": {
+				"url": "http://localhost:3000/places/seo-urls-con-slug-3",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n \"description\": \"Best company in the world alwa knkn nkn  inkk  ys jnk  \"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/places",
+			"request": {
+				"url": "http://localhost:3000/places",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNjI3ODA2MjU3ZmNiMjY0ODVlNzdiNSIsImlhdCI6MTUxNjQ3NDQ1NH0.kYNM9GiEMroBYT5PjLjO_tbv_OoFLgjjOJ3OxdMINQc",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Tercero OTRO Creado con Auth Json web token",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "using multer in express",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "openHour",
+							"value": "4",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "closeHour",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "avatar",
+							"value": "",
+							"description": "",
+							"type": "file",
+							"disabled": true
+						},
+						{
+							"key": "cover",
+							"value": "",
+							"description": "",
+							"type": "file",
+							"disabled": true
+						},
+						{
+							"key": "accetpsCreditCard",
+							"value": "true",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "502west 0001ST New York, NY",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Session",
+			"request": {
+				"url": "http://localhost:3000/sessions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"hello@hello.com\",\n\t\"password\": \"hellohello\"\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"url": "http://localhost:3000/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"edward@place.com\",\n\t\"password\": \"demodemo\",\n\t\"name\": \"Demo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Lugar con usuario ",
+			"request": {
+				"url": "http://localhost:3000/places",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNjNlMGYxZjNhODQyMDI2OGE3OWQ2YyIsImlhdCI6MTUxNjQ5NTA5MX0.JzBHdJL8NnVgeazdVvWL7BsgpRH6OiZgmnj2rClgcq4",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Nuevos Lugar Famoso",
+							"description": ""
+						},
+						{
+							"key": "description",
+							"value": "Muy lindo",
+							"description": ""
+						},
+						{
+							"key": "address",
+							"value": "525west New York, NY",
+							"description": ""
+						},
+						{
+							"key": "openHour",
+							"value": "7",
+							"description": ""
+						},
+						{
+							"key": "closeHour",
+							"value": "17",
+							"description": ""
+						},
+						{
+							"key": "coverImage",
+							"value": "",
+							"description": "",
+							"type": "file"
+						},
+						{
+							"key": "avatarImage",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Lugar con usuario edward@place.com",
+			"request": {
+				"url": "http://localhost:3000/places/mi-lugar-para-editar",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNjNlM2RiNTVjYTE1M2QwNGZlMDIxYSIsImlhdCI6MTUxNjQ5Njk3Nn0.hrHT2SHSoM76n50R8WVjvZvnc6nbQVLRwP7sPHABrPQ",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Mi lugar para editar 2\",\n\t\"description\": \"Mi lugar editado, porque soy el dueno \"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Session-Edward@place.com",
+			"request": {
+				"url": "http://localhost:3000/sessions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"edward@place.com\",\n\t\"password\": \"edwardedward\"\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
