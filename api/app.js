@@ -34,7 +34,7 @@ app.use(
 	//to loging and create user are excluded from the protection so you can request without needing a json web token.
 		// .unless({path: ['/sessions', 'users'] })
 	// This line excludes the protection to the "GET" request
-		.unless({path: ['/sessions', 'users'], method: 'GET' })
+		.unless({path: ['/sessions']})//this line does not have users or get mothod excluded from the protection, its like that only to for testing the virtual to get all User's places using GET mehtod 
 
 	)
 

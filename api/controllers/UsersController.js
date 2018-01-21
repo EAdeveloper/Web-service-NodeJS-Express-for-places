@@ -31,13 +31,25 @@ function create(req,res,next){
 }
 
 
+function myPlaces(req,res){
+		User.findOne( {'_id': req.user.id }).then(user=>{
+			user.myPlacesVirtual.then(lugares=>{
+				res.json(lugares);
+			})
+		}).catch(err=>{
+			res.json(err);
+		})
+}
+
+
+
+module.exports = { create, myPlaces	}
+
+
+
 // WARNING
 // This is the most dangerous funtion for the route
 // function destroyAll(req, res){
 // 	User.remove({}).then(r => res.json({}));
 // }
 // module.exports = { create, destroyAll }
-
-
-
-module.exports = { create}

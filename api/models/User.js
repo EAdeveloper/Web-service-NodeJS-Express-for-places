@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const mongooseBcrypt = require('mongoose-bcrypt');
 
+const Place = require('./Place');
+
 
 
 let userSchema = new mongoose.Schema({
@@ -31,6 +33,14 @@ userSchema.post('save', function(user, next){
 			next();
 		}
 	})
+})
+
+
+// Mongoose supports virtual attributes.
+// a 'virtual' is an virtual attribute of a document, it can be use get data or to send data 'get' or 'post'
+// get all places created by a User example; edward.places
+userSchema.virtual('myPlacesVirtual').get(function(){
+	return Place.find({'_user': this._id})
 })
 
 

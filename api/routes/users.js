@@ -11,6 +11,10 @@ router.route('/')
 		sessionsController.sendToken
 		)
 
+	// this routes is for Testing the virtual to get All place created by an User
+	.get(usersController.myPlaces);
+
+
 	// WARNING
 	// When do get, this route will destroy all users
 	// .get(usersController.destroyAll);
