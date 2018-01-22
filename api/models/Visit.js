@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
+const REACTIONS = ['like', 'love', 'disappointment', 'yumy', 'anger', 'disgust'];
 
 
 let visitSchema = new mongoose.Schema({
@@ -15,6 +16,12 @@ let visitSchema = new mongoose.Schema({
 		ref: 'Place',
 		required: true
 	},
+	
+	reaction:{
+		type: String,
+		enum: REACTIONS
+	},
+
 	feedback: String
 
 })
