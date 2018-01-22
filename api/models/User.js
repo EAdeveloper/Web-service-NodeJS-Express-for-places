@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongooseBcrypt = require('mongoose-bcrypt');
 
 const Place = require('./Place');
-
+const FavoritePlace = require("./FavoritePlace");
 
 
 let userSchema = new mongoose.Schema({
@@ -42,6 +42,20 @@ userSchema.post('save', function(user, next){
 userSchema.virtual('myPlacesVirtual').get(function(){
 	return Place.find({'_user': this._id})
 })
+
+// Virtual to get the Favorites Places of a User
+userSchema.virtual("favoritesVirtual").get(function(){
+	return FavoritePlace.find({'_user': this.id}, {'_place': true})
+		.then(favs=>{
+			// Array to get all ids for the places
+			let placeIds = favs.map(fav => fav._place);
+
+			// SELECT IN query
+			// Find all places for the ids in the Array
+			return Place.find( {'_id': {$in: placeIds}} )
+		})
+})
+
 
 
 //mongoose-bcrypt adds an encrypt field "password" and a set of methods like

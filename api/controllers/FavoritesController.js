@@ -1,7 +1,8 @@
 const buildParams = require('./helpers').buildParams;
 const validParams = ['_place'];
 
-const FavoritePlace = require('../models/FavoritePlace');	
+const FavoritePlace = require('../models/FavoritePlace');
+const User = require("../models/User");	
 
 
 function find(req, res, next){
@@ -10,6 +11,19 @@ function find(req, res, next){
 		req.favorite = fav; //we saved in this property to use it to delete it
 		next();
 	}).catch(next);
+}
+
+// Show all favrites places
+function index(req, res){
+	// req.user
+	User.findOne( {'_id': req.user.id }).then(user=>{
+			user.favoritesVirtual.then(lugares=>{
+				res.json(lugares);
+			})
+		}).catch(err=>{
+			console.log(err);
+			res.json(err);
+		})
 }
 
 
@@ -35,4 +49,4 @@ function destroy(req, res){
 }
 
 
-module.exports = {find, create, destroy };
+module.exports = {find, create, destroy, index};

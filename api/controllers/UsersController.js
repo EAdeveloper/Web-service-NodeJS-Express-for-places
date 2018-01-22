@@ -37,6 +37,7 @@ function myPlaces(req,res){
 				res.json(lugares);
 			})
 		}).catch(err=>{
+			console.log(err);
 			res.json(err);
 		})
 }
